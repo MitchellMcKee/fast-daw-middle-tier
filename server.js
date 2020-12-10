@@ -11,8 +11,7 @@ app.use(function (req, res, next) {
 });
 
 
-require('./controllers/questions.controller.server')(app)
-
+require('./controllers/user-controller')(app)
 
 app.get('/hello', (req, res) => res.send("yes chef"))
 
