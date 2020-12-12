@@ -23,6 +23,6 @@ module.exports = (app) => {
     res.json(message)
   }
 
-  app.get("/api/users/", findAllUsers)
-  app.put("/api/users/:username", findUserByUsername)
+  app.get("/users", findAllUsers)
+  app.put("/users/:username", findUserByUsername)
 }
