@@ -1,13 +1,18 @@
 const userService = require("../services/users-service")
 const bodyParser = require('body-parser');
+const User = require('../models/user-model')
 
 module.exports = (app) => {
   app.use(bodyParser.urlencoded({ extended: true }));
   app.use(bodyParser.json());
 
   const findAllUsers = (req, res) => {
-      const users = userService.findAllUsers()
-      res.json(users)
+      try {
+        User.find()
+          .then(users => res.json(users))
+      } catch (error) {
+        res.send('Error: ' + error)
+      }
   }
 
   const findUserByUsername = (req, res) => {
@@ -23,6 +28,20 @@ module.exports = (app) => {
     res.json(message)
   }
 
+  const addUser = (req, res) => {
+    const user = new User({
+      username: req.body.username,
+      password: req.body.password
+    })
+    try {
+      user.save()
+        .then(user => res.json(user))
+    } catch (error) {
+      res.send('Error: ' + error)
+    }
+  }
+
   app.get("/users", findAllUsers)
-  app.put("/users/:username", findUserByUsername)
+  app.put("/users", findUserByUsername)
+  app.post("/users", addUser)
 }

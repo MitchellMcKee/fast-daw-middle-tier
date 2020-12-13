@@ -1,4 +1,7 @@
 const express = require('express')
+const mongoose = require('mongoose')
+const mongodb = require('mongodb')
+
 const app = express()
 
 app.use(function (req, res, next) {
@@ -10,6 +13,16 @@ app.use(function (req, res, next) {
   next();
 });
 
+mongoose.connect('mongodb://localhost/fast-daw', { 
+  useNewUrlParser: true, 
+  useUnifiedTopology: true
+})
+
+mongoose.connection.once('open', () => {
+  console.log('connection has been made')})
+    .on('error', error => {
+      console.log('error is:', error)
+    })
 
 require('./controllers/user-controller')(app)
 
