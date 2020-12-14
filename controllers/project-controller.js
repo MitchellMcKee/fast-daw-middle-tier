@@ -43,15 +43,17 @@ module.exports = (app) => {
   }
 
   const updateProjectById = (req, res) => {
-    const updatedProject = new Project({
-      name: req.body.name,
-      editors: req.body.editors,
-      tracks: req.body.tracks
-    })
     try {
-      project.findOneAndUpdate({_id: req.params.projectId}, updatedProject, (error, project) => {
+      Project.findOneAndUpdate(
+        {_id: req.params.projectId}, 
+        {
+          name: req.body.name,
+          editors: req.body.editors,
+          tracks: req.body.tracks
+        }, 
+        (error, project) => {
         if(error) {
-          res.send('Error: ' + error)
+          res.json({error: true})
         } else {
           res.send(project)
         }
