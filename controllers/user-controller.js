@@ -1,4 +1,3 @@
-const userService = require("../services/users-service")
 const bodyParser = require('body-parser');
 const User = require('../models/user-model')
 
@@ -7,25 +6,29 @@ module.exports = (app) => {
   app.use(bodyParser.json());
 
   const findAllUsers = (req, res) => {
-      try {
-        User.find()
-          .then(users => res.json(users))
-      } catch (error) {
-        res.send('Error: ' + error)
-      }
+    try {
+      User.find()
+        .then(users => res.json(users))
+    } catch (error) {
+      res.send('Error: ' + error)
+    }
   }
 
   const findUserByUsername = (req, res) => {
-    const username = req.body.username
-    const password = req.body.password
-    const users = userService.findAllUsers()
-    let message = {"validationMessage": "Incorrect Username/Password"}
-    users.forEach(user => {
-      if(user.username === username && user.password === password) {
-        message.validationMessage = "verified"
-      }
-    });
-    res.json(message)
+    try {
+      User.find({ 
+        username: req.body.username,
+        password: req.body.password
+       }, (error, user) => {
+        if(user.length > 0) {
+          res.json({"validationMessage": "verified", "userId": user[0]._id})
+        } else {
+          res.json({"validationMessage": "Incorrect Username/Password"})
+        }
+      })
+    } catch (error) {
+      res.send('Error: ' + error)
+    }
   }
 
   const addUser = (req, res) => {
