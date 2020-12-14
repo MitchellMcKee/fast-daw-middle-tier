@@ -14,7 +14,7 @@ module.exports = (app) => {
     }
   }
 
-  const findUserByUsername = (req, res) => {
+  const checkUserCredentials = (req, res) => {
     try {
       User.find({ 
         username: req.body.username,
@@ -44,7 +44,35 @@ module.exports = (app) => {
     }
   }
 
+  const findUserById = (req, res) => {
+    try {
+      User.find({_id: req.params.userId}, (error, user) => {
+        if(user.length > 0) {
+          res.json(user[0])
+        }
+      })
+    } catch (error) {
+      res.send('Error: ' + error)
+    }
+  }
+
+  const updateUserById = (req, res) => {
+    try {
+      User.findOneAndUpdate({_id: req.params.userId}, {username: req.body.username, password: req.body.password}, (error, user) => {
+        if(error) {
+          res.send('Error: ' + error)
+        } else {
+          res.send(user)
+        }
+      })
+    } catch (error) {
+      res.send('Error: ' + error)
+    }
+  }
+
+  app.get("/users/:userId", findUserById)
+  app.put("/users/:userId", updateUserById)
   app.get("/users", findAllUsers)
-  app.put("/users", findUserByUsername)
+  app.put("/users", checkUserCredentials)
   app.post("/users", addUser)
 }

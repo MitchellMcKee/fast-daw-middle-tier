@@ -20,7 +20,8 @@ const conn = mongoose.createConnection('mongodb://localhost/fast-daw', {
 
 mongoose.connect('mongodb://localhost/fast-daw', { 
   useNewUrlParser: true,
-  useUnifiedTopology: true
+  useUnifiedTopology: true,
+  useFindAndModify: false
 })
 
 let gfs
@@ -35,6 +36,9 @@ conn.once('open', () => {
 
 require('./controllers/audio-controller')(app)
 require('./controllers/user-controller')(app)
+require('./controllers/track-controller')(app)
+require('./controllers/project-controller')(app)
+require('./controllers/project-track-controller')(app)
 
 app.get('/files', (req, res) => {
   gfs.files.find().toArray((error, files) => {
