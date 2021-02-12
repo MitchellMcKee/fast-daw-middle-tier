@@ -55,8 +55,23 @@ module.exports = (app) => {
     }
   }
 
+  const deleteTrackById = (req, res) => {
+    try {
+      track.findOneAndDelete({_id: req.params.userId}, {name: req.body.name, filename: req.body.filename}, (error, track) => {
+        if(error) {
+          res.send('Error: ' + error)
+        } else {
+          res.send(track)
+        }
+      })
+    } catch (error) {
+      res.send('Error: ' + error)
+    }
+  }
+
   app.get("/tracks/:trackId", findTrackById)
   app.put("/tracks/:trackId", updateTrackById)
+  app.delete("/tracks/:trackId", deleteTrackById)
   app.get("/tracks", findAllTracks)
   app.post("/tracks", addTrack)
 }
