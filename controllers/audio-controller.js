@@ -36,4 +36,6 @@ module.exports = (app) => {
       filename: req.file.filename
     })
   })
+
+  // upgrade GridStore to GridFSBucket
 }

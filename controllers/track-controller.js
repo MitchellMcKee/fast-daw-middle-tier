@@ -29,7 +29,7 @@ module.exports = (app) => {
 
   const findTrackById = (req, res) => {
     try {
-      track.find({_id: req.params.trackId}, (error, track) => {
+      Track.find({_id: req.params.trackId}, (error, track) => {
         if(track.length > 0) {
           res.json(track[0])
         } else {
@@ -37,13 +37,14 @@ module.exports = (app) => {
         }
       })
     } catch (error) {
+      
       res.send('Error: ' + error)
     }
   }
 
   const updateTrackById = (req, res) => {
     try {
-      track.findOneAndUpdate({_id: req.params.userId}, {name: req.body.name, filename: req.body.filename}, (error, track) => {
+      Track.findOneAndUpdate({_id: req.params.userId}, {name: req.body.name, filename: req.body.filename}, (error, track) => {
         if(error) {
           res.send('Error: ' + error)
         } else {
@@ -57,7 +58,7 @@ module.exports = (app) => {
 
   const deleteTrackById = (req, res) => {
     try {
-      track.findOneAndDelete({_id: req.params.userId}, {name: req.body.name, filename: req.body.filename}, (error, track) => {
+      Track.findOneAndDelete({filename: req.params.trackId}, (error, track) => {
         if(error) {
           res.send('Error: ' + error)
         } else {
