@@ -63,8 +63,25 @@ module.exports = (app) => {
     }
   }
 
+  const deleteProjectById = (req, res) => {
+    try {
+      Project.findOneAndDelete(
+        {_id: req.params.projectId}, 
+        (error, project) => {
+        if(error) {
+          res.json({error: true})
+        } else {
+          res.send(project)
+        }
+      })
+    } catch (error) {
+      res.send('Error: ' + error)
+    }
+  }
+
   app.get("/projects/:projectId", findProjectById)
   app.put("/projects/:projectId", updateProjectById)
+  app.delete("/projects/:projectId", deleteProjectById)
   app.get("/projects", findAllProjects)
   app.post("/projects", addProject)
 }
