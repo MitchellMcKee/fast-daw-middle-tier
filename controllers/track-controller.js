@@ -57,7 +57,6 @@ module.exports = (app) => {
   }
 
   app.get("/tracks/:trackId", findTrackById)
-  app.put("/tracks/:trackId", updateTrackById)
   app.delete("/tracks/:trackId", deleteTrackById)
   app.get("/tracks", findAllTracks)
   app.post("/tracks", addTrack)
