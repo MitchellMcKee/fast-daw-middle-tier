@@ -1,3 +1,3 @@
-# fast-daw-middle-tier
+# Fast-DAW-middle-tier
 
-Middle Tier for MEAN stack application
+Node.js middle tier for 'Fast-DAW' that uses Express to connect to the front-end, Mongoose to connect to a MongoDB database, and GridFS to store large media files
