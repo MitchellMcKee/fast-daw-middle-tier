@@ -42,20 +42,6 @@ module.exports = (app) => {
     }
   }
 
-  const updateTrackById = (req, res) => {
-    try {
-      Track.findOneAndUpdate({_id: req.params.userId}, {name: req.body.name, filename: req.body.filename}, (error, track) => {
-        if(error) {
-          res.send('Error: ' + error)
-        } else {
-          res.send(track)
-        }
-      })
-    } catch (error) {
-      res.send('Error: ' + error)
-    }
-  }
-
   const deleteTrackById = (req, res) => {
     try {
       Track.findOneAndDelete({filename: req.params.trackId}, (error, track) => {
