@@ -14,7 +14,7 @@ module.exports = (app) => {
     url: 'mongodb://localhost/fast-daw',
     file: (req, file) => {
       return new Promise((resolve, reject) => {
-        crypto.randomBytes(16, (error, buffer) => {
+        crypto.randomBytes(4, (error, buffer) => {
           if (error) {
             return reject(error)
           }
@@ -36,6 +36,4 @@ module.exports = (app) => {
       filename: req.file.filename
     })
   })
-
-  // upgrade GridStore to GridFSBucket
 }

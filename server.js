@@ -30,10 +30,7 @@ conn.once('open', () => {
 })
 
 require('./controllers/audio-controller')(app)
-require('./controllers/user-controller')(app)
 require('./controllers/track-controller')(app)
-require('./controllers/project-controller')(app)
-require('./controllers/project-track-controller')(app)
 
 app.get('/files', (req, res) => {
   gfs.files.find().toArray((error, files) => {
